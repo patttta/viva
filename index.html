@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>퐁모코 일일퀘스트</title>
+
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+      text-align: center;
+      padding: 60px;
+    }
+.logo-wrap {
+  text-align: center;
+  margin-bottom: 30px;
+}
+.logo-wrap a {
+  display: inline-block;
+}
+.logo-wrap img {
+  max-width: 350px;   /* 로고 최대 크기 */
+  width: 100%;
+  height: auto;
+  cursor: pointer;
+}
+
+    h2 {
+      color: #8D7860;
+    }
+
+    button {
+      padding: 14px 24px;
+      font-size: 16px;
+      border: none;
+      border-radius: 15px;
+      color: #fff;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+    .btn-fish {
+      background: #9ABF62;
+    }
+    
+    .btn-gather {
+      background: #C69B60;
+    }
+
+/* 비활성화 상태 */
+button:disabled {
+  background: #FA8B60;
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+.random-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.random-box {
+  width: 100%;
+  max-width: 420px;
+}
+
+    .result {
+      margin-top: 25px;
+    }
+
+    .image-box {
+      width: 100%;
+      height: 260px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      margin-top: 10px;
+      margin-bottom: 16px;
+    }
+
+    .image-box img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      border-radius: 12px;
+    }
+
+    .result-text {
+      margin-top: 12px;
+      font-size: 20px;
+      font-weight: 600;
+      color: #8D7860;
+      margin-top: 8px; 
+    }
+
+    footer {
+      margin-top: 100px;
+      font-size: 12px;
+      color: #8D7860;
+    }
+
+    @keyframes pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.pop {
+  animation: pop 0.35s ease-out;
+}
+  </style>
+</head>
+
+<body>
+  <div class="logo-wrap">
+  <a href="">
+    <img src="https://i.imgur.com/rYcxn0Z.png" alt="퐁모코 로고">
+  </a>
+</div>
+
+  <div class="random-wrap">
+
+    <div class="random-box">
+      <h2>🐟 오늘 낚은 물고기는?</h2>
+      <button class="btn-fish" onclick="pickRandom(itemsA, 'imageA', 'textA')">
+        낚시하기
+      </button>
+      <div class="result">
+        <div class="image-box">
+          <img id="imageA" src="">
+        </div>
+        <div id="textA" class="result-text"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    © Pong PocoPoco Project
+  </footer>
+
+  <script>
+      const lastIndexMap = {};
+  let remainingClicks = 3;
+
+  function pickRandom(items, imageId, textId) {
+    if (remainingClicks <= 0) return;
+
+    let i;
+    do {
+      i = Math.floor(Math.random() * items.length);
+    } while (lastIndexMap[imageId] === i && items.length > 1);
+
+    lastIndexMap[imageId] = i;
+
+    const imgEl = document.getElementById(imageId);
+    const textEl = document.getElementById(textId);
+
+    imgEl.src = items[i].img;
+    textEl.innerText = items[i].text;
+
+    playAnimation(imgEl, textEl);
+
+    remainingClicks--;
+    updateButtons();
+  }
+
+  function updateButtons() {
+    if (remainingClicks <= 0) {
+      document.querySelectorAll("button").forEach(btn => {
+        btn.disabled = true;
+        btn.innerText = "오늘은 여기까지!";
+      });
+    }
+  }
+ function playAnimation(imgEl, textEl) {
+    imgEl.classList.remove("pop");
+    textEl.classList.remove("pop");
+
+    void imgEl.offsetWidth; // 애니메이션 리셋용
+
+    imgEl.classList.add("pop");
+    textEl.classList.add("pop");
+  }
+    const itemsA = [
+      { img: "https://i.imgur.com/bIymehF.png", text: "옐로우 퍼치를 잡았다!" },
+      { img: "https://i.imgur.com/ObKjqAV.png", text: "가시복어를 낚았다!" },
+      { img: "https://i.imgur.com/FvBvCoC.png", text: "가오리를 낚았다!" },
+      { img: "https://i.imgur.com/VgNe9LJ.png", text: "개복치를 낚았다!" },
+      { img: "https://i.imgur.com/SXEHo8L.png", text: "고등어를 낚았다!" },
+      { img: "https://i.imgur.com/3M68Fb5.png", text: "곰치를 낚았다!" },
+      { img: "https://i.imgur.com/P4ILtJr.png", text: "나뭇잎해룡을 낚았다!" },
+      { img: "https://i.imgur.com/PV5Vg6Q.png", text: "난주를 낚았다!" },
+      { img: "https://i.imgur.com/Emucxex.png", text: "노랑양쥐돔을 낚았다!" },
+      { img: "https://i.imgur.com/g8N5f2I.png", text: "돌돔을 낚았다!" },
+      { img: "https://i.imgur.com/W3GWAl1.png", text: "메기를 낚았다!" },
+      { img: "https://i.imgur.com/7S5FoWq.png", text: "멸치를 낚았다!" },
+      { img: "https://i.imgur.com/FJn26cn.png", text: "명태를 낚았다!" },
+      { img: "https://i.imgur.com/j7KWkjJ.png", text: "장어를 낚았다!" },
+      { img: "https://i.imgur.com/LNXkI49.png", text: "방어를 낚았다!" },
+      { img: "https://i.imgur.com/E6rBZho.png", text: "베타를 낚았다!" },
+      { img: "https://i.imgur.com/pdCAdV2.png", text: "산천어를 낚았다!" },
+      { img: "https://i.imgur.com/X6o3l1k.png", text: "성게를 낚았다!" },
+      { img: "https://i.imgur.com/1gz0xWn.png", text: "심해아귀를 낚았다!" },
+      { img: "https://i.imgur.com/HSgFbmk.png", text: "앨리게이터가아를 낚았다!" },
+      { img: "https://i.imgur.com/EYiPv00.png", text: "앵무조개를 낚았다!" },
+      { img: "https://i.imgur.com/rUm8Qf8.png", text: "연잎성게를 낚았다!" },
+      { img: "https://i.imgur.com/nbwA6K9.png", text: "오징어를 낚았다!" },
+      { img: "https://i.imgur.com/dogKlQL.png", text: "정원장어를 낚았다!" },
+      { img: "https://i.imgur.com/2QSkM76.png", text: "카디널테트라를 낚았다!" },
+      { img: "https://i.imgur.com/fT6WWCL.png", text: "클리오네를 낚았다!" },
+      { img: "https://i.imgur.com/c63vX6s.png", text: "풍년새우를 낚았다!" },
+      { img: "https://i.imgur.com/BXaCta4.png", text: "해삼을 낚았다!" },
+      { img: "https://i.imgur.com/TRhKF7t.png", text: "흑기흉상어를 낚았다!" },
+      { img: "https://i.imgur.com/ZWXsHIU.png", text: "흰동가리를 낚았다!" }
+    ];
+
+  
+  </script>
+
+</body>
+</html>
