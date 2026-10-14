@@ -24,6 +24,16 @@
   cursor: pointer;
 }
 
+.description-text {
+  margin-top: 10px;
+  font-size: 15px;
+  line-height: 1.7;
+  font-weight: 400;
+  color: #8D7860;
+  white-space: pre-line;
+}
+    
+
     h2 {
       color: #8D7860;
     }
@@ -38,7 +48,7 @@
       margin-bottom: 20px;
     }
     .btn-fish {
-      background: #9ABF62;
+      background: #2BBFEF;
     }
     
     .btn-gather {
@@ -143,6 +153,8 @@ button:disabled {
           <img id="imageA" src="">
         </div>
         <div id="textA" class="result-text"></div>
+        <div id="descriptionA" class="description-text"></div>
+
       </div>
     </div>
 
@@ -171,6 +183,8 @@ button:disabled {
 
     imgEl.src = items[i].img;
     textEl.innerText = items[i].text;
+    document.getElementById("descriptionA").innerText =
+  items[i].description || "";
 
     playAnimation(imgEl, textEl);
 
@@ -196,16 +210,16 @@ button:disabled {
     textEl.classList.add("pop");
   }
     const itemsA = [
-      { img: "1.png", text: "인형을 낚았다!" },
-      { img: "2.png", text: "인형을 낚았다!" },
-      { img: "3.png", text: "인형을 낚았다!" },
-      { img: "4.png", text: "인형을 낚았다!" },
-      { img: "5.png", text: "인형을 낚았다!" },
-      { img: "6.png", text: "인형을 낚았다!" },
-      { img: "7.png", text: "인형을 낚았다!" },
-      { img: "8.png", text: "인형을 낚았다!" },
-      { img: "9.png", text: "인형을 낚았다!" },
-      { img: "10.png", text: "인형을 낚았다!" }
+      {
+        img: "1.png",
+        text: "인형을 낚았다!",
+        description: "보상으로 칭찬 스티커 1장이 나왔다!"
+      },
+      {
+        img: "2.png",
+        text: "인형을 낚았다!",
+        description: "보상으로 칭찬 스티커 1장이 나왔다!"
+      }
 
     ];
 
